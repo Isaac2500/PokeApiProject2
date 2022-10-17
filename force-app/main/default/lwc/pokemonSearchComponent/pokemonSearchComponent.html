@@ -1,0 +1,30 @@
+<template>
+    <article class="slds-card">
+        
+        <div class="slds-card__body slds-card__body_inner slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input type="text"
+                    value={searchValue}
+                    label="Pokemon Name"
+                    onchange={searchHandlerKeyUp}
+                ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <lightning-button label="Search"
+                    onclick={publishMessage}
+                    variant="brand"
+                    class="slds-p-around_small">
+                </lightning-button>
+            </div>
+        </div>
+        <footer class="slds-card__footer"></footer>
+
+        
+    </article>
+    
+    
+    
+    
+
+        
+</template>

@@ -1,5 +1,5 @@
 public with sharing class GenericHttpCallouts {
-    
+     
     public static HttpResponse Request(String URL, String method){
 
         Http http = new Http();

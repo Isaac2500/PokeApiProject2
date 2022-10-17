@@ -1,0 +1,64 @@
+<template>
+    <div>
+        <table class='slds-table'>
+            <thead>
+                <tr>                     
+                    <th>
+                        <a data-id="Id">
+                            <div>Id</div>
+                        </a>
+                    </th>
+                    <th>
+                        <a data-id="Name">
+                            <div>Name</div>
+                        </a>
+                    </th>
+                    <th>
+                        Details
+                    </th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={pokemonList} for:item="pokemon">
+                    <tr key={pokemon.id}>                
+                        
+                        <td>                                
+                            {pokemon.Id__c}
+                        </td>
+                        
+                        <td>                                
+                            {pokemon.Name}
+                        </td>
+                        
+                        <td>
+
+                            <lightning-button
+                                label="Show Details"
+                               onclick={handleShowModal}
+                               data-id={pokemon.id}
+                            ></lightning-button>
+
+                            <c-pokemon-modal-component
+                                    
+                            sprite = {pokemon.Sprite__c}
+                            name = {nombrepokemon}
+                                
+                            ></c-pokemon-modal-component>
+                        </td>                  
+                        
+                    </tr>                                                                     
+                </template>
+            </tbody>
+        </table>
+        <div style="float: right;">
+            <button style="margin-right: 10px;" onclick={prevpage}>
+                <lightning-icon icon-name="utility:chevronleft" onclick={prevpage}></lightning-icon>
+            </button>
+            <button>
+                <lightning-icon icon-name="utility:chevronright" onclick={nextpage}></lightning-icon>
+            </button>
+        </div>
+    </div>
+
+    
+</template>

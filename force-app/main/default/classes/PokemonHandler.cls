@@ -9,7 +9,7 @@ public with sharing class PokemonHandler {
         Map<String,Object> results = new Map<String,Object>();
         List<Object> listResponse = new List<Object>();
 
-        if(response.getStatusCode() == 200){
+        if(response.getStatusCode() == 200 && response.getBody() != null){
             results = (Map<String,Object>) JSON.deserializeUntyped(response.getBody());
             listResponse = (List<Object>) results.get('results');
             //System.debug(listResponse);
@@ -17,4 +17,11 @@ public with sharing class PokemonHandler {
         }
 
     }
+
+    /*public class PokeData {
+        public string name;
+        public string url;
+                
+    }*/
+
 }
