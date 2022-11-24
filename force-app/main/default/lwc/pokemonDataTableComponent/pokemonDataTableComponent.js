@@ -3,58 +3,25 @@ import { APPLICATION_SCOPE, MessageContext, subscribe} from 'lightning/messageSe
 import POKEMON_MC from '@salesforce/messageChannel/PokemonMessageChannel__c';
 import searchPokemons from '@salesforce/apex/PokemonSearchCls.searchPokemons';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
-import GetNextPage from "@salesforce/apex/PokemonSearchCls.GetNextPage";
-import GetPrevPage from "@salesforce/apex/PokemonSearchCls.GetPrevPage";
-
-
-
-
-
+import getNextPageApex from "@salesforce/apex/PokemonSearchCls.GetNextPage";
+import getPrevPageApex from "@salesforce/apex/PokemonSearchCls.GetPrevPage";
 
 export default class PokemonDataTableComponent extends LightningElement {
 
     @wire(MessageContext)
     context
 
-    @track searchKey='';
     @track pokemonList=[];
-    @track nombrepokemon = '';
-    pageLength = 5;
-    page = 0;
+    searchKey='';
+    @track pageLength = 9;
+    @track page = 0;
+    @track totalNumberOfPages = 0;
+    @track actualPage;
+    showModal = false;
 
     constructor(){
         super();
-
-        searchPokemons({
-            pokemonName: this.searchKey, 
-            pageLength: this.pageLength, 
-            page: this.page
-
-        })
-        .then(result => {
-              
-            this.pokemonList = result;
-            console.log(result);
-        }).catch(error => {
-                   
-            const event = new ShowToastEvent({
-                title: 'Error',
-                variant: 'error',
-                message: error.body.message,
-            });
-            this.dispatchEvent(event);
-            console.log(error)  
-            this.pokemonList = null;
-        });
-
-        this.template.querySelectorAll("lightning-button").forEach(element => {
-            element.addEventListener("click", ()=>{
-                element.show();
-                console.log("modal called");
-            })
-        });
-
-        
+             
     }
 
     getMessage(){
@@ -69,12 +36,13 @@ export default class PokemonDataTableComponent extends LightningElement {
             searchPokemons({
                     pokemonName: this.searchKey,
                     pageLength: this.pageLength, 
-                    page: this.page
+                    page: 0
                 })
                 .then(result => {
                       
                     this.pokemonList = result;
-                    console.log(this.pokemonList)
+                    console.log(this.pokemonList);
+                    this.totalNumberOfPages = Math.ceil(this.pokemonList.length/this.pageLength);
                 })
                 .catch(error => {
                    
@@ -88,54 +56,99 @@ export default class PokemonDataTableComponent extends LightningElement {
                     this.pokemonList = null;
                 });
         } else {
-            // fire toast event if input field is blank
-            const event = new ShowToastEvent({
-                variant: 'error',
-                message: 'Search text missing..',
+            
+            searchPokemons({
+                pokemonName: this.searchKey,
+                pageLength: 9, 
+                page: 0
+            })
+            .then(result => {
+                  
+                this.pokemonList = result;
+                console.log(this.pokemonList);
+                this.totalNumberOfPages = Math.ceil(this.pokemonList.length/this.pageLength);
+            })
+            .catch(error => {
+               
+                const event = new ShowToastEvent({
+                    title: 'Error',
+                    variant: 'error',
+                    message: error.body.message,
+                });
+                this.dispatchEvent(event);
+                console.log(error)  
+                this.pokemonList = null;
             });
-            this.dispatchEvent(event);
+
         }
-
-
     }
 
     connectedCallback() {
         this.getMessage();
+        searchPokemons({
+            pokemonName: this.searchKey, 
+            pageLength: this.pageLength, 
+            page: this.page
+        })
+        .then(result => {
+              
+            this.pokemonList = result;
+            console.log(result);
+            this.totalNumberOfPages = Math.ceil(this.pokemonList.length/this.pageLength);
+        }).catch(error => {
+                   
+            const event = new ShowToastEvent({
+                title: 'Error',
+                variant: 'error',
+                message: error.body.message,
+            });
+            this.dispatchEvent(event);
+            console.log(error)  
+            this.pokemonList = null;
+        });
     }
 
     GetNextPage(){
         this.page = this.page + 1;
             getNextPageApex({pokemonName: this.searchKey, pageLength: this.pageLength, page: this.page}).then(result => {  
                 this.pokemonList = result;
-                console.log(this.pokemonList)      
+                console.log(this.pokemonList)
             });
+            
     }   
 
     GetPrevPage(){
+        console.log(this.pokemonList)
         if(this.page >= 1){
             this.page = this.page - 1;
             getPrevPageApex({pokemonName: this.searchKey, pageLength: this.pageLength, page: this.page}).then(result => {  
-                this.pokemonList = result; 
-                console.log(this.pokemonList)     
-            }); 
+                this.pokemonList = result;
+                console.log(this.pokemonList)
+            });
         }
     }
 
     handleShowModal(event) {
-
-        let pokemon = this.pokemonList.filter(e => e.id == event.currentTarget.dataset.id );
-        console.log(JSON.stringify(pokemon));
-        this.nombrepokemon = pokemon[0].Name;
-        
-        const modal = this.template.querySelector("c-pokemon-modal-component");   
-        modal.show();
-        
+        let pokemon = this.pokemonList.filter(e => e.Id__c == event.currentTarget.dataset.id);
+        this.pokeId = pokemon[0].Id__c;
+        this.sprite = pokemon[0].Sprite__c;
+        this.name = pokemon[0].Name;
+        this.weight = pokemon[0].weight__c;
+        this.height = pokemon[0].height__c;
+        this.hp = pokemon[0].Hp__c;
+        this.speed= pokemon[0].Speed__c;
+        this.defense = pokemon[0].Defense__c;
+        this.attack = pokemon[0].Attack__c;
+        this.type = pokemon[0].Type__c;
+        this.showModal = true;
     }
 
-    
+    closeModal(){
+        this.showModal = false;
+    }
 
-    
+    calculatePagination(){
+        this.totalNumberOfPages = Math.ceil(this.pokemonList.length/this.pageLength);
+        console.log(Math.ceil(this.pokemonList.length/this.pageLength));
+    }
 }
-
-
-

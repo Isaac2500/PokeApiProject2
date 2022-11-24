@@ -13,7 +13,7 @@ public with sharing class PokemonHandler {
             results = (Map<String,Object>) JSON.deserializeUntyped(response.getBody());
             listResponse = (List<Object>) results.get('results');
             //System.debug(listResponse);
-            Database.executeBatch(new PokeBatch(listResponse),100);
+            Database.executeBatch(new PokeBatch(listResponse),40);
         }
 
     }

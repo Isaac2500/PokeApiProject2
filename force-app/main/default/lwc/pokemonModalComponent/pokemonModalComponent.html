@@ -1,35 +1,42 @@
 <template>
-    <template if:true={showModal}>
-        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
-            class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-                <div class="slds-modal__header">
-                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{name}</h1>  
-                </div>
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    
-                    <div class="slds-grid slds-wrap">
-                        <div class="slds-col slds-size_1-of-2">
-                            Pokemon Details   
-                        </div>
-
-                        <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
-                            <img src='{sprite}' style="max-width:85%;max-height:80%; height: 220px; width: 220px;"/>
-                        </div>
-
-                        <div class="slds-col slds-size_1-of-2">
-                            Pokemon Stats
-                        </div>
-
-                        
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <div class="slds-modal__content slds-p-around_medium modal-container" id="modal-content-id-1">
+                <div class="slds-grid slds-wrap">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">#{pokeId}</h1> 
+                    <!--
+                    <div class="slds-col slds-size_2-of-2 slds-align_absolute-center">
+                        <img src='{sprite}' style="max-width:85%;max-height:80%; height: 220px; width: 220px;"/>
                     </div>
-                    
-                </div>
-                <div class="slds-modal__footer">
-                    <button class="slds-button slds-button_brand" onclick={handleDialogClose}>Close</button>
-                </div>
+                    <div class="slds-col slds-size_2-of-2">
+                        Pokemon Stats
+                    </div>
+                    -->
+                    <div class="slds-col slds-size_2-of-2 slds-align_absolute-center">
+                        <img src='{sprite}' class="poke-img"/>
+                    </div>
+                    <div class="stats-container">
+                        <div class="pokemon-name">{name}</div>
+                        <div class="pokemon-weight">{weight} KG</div>
+                        <p>Type: {type}</p>
+                        <br>
+                        
+                        <p>Hp: {hpstat}</p>
+                        <lightning-progress-bar value={hpstat} size="large" variant="circular"></lightning-progress-bar>
+                        <p>Defense: {defensestat}</p>
+                        <lightning-progress-bar value={defensestat} size="large" variant="circular"></lightning-progress-bar>
+                        <p>Speed: {speedstat}</p>
+                        <lightning-progress-bar value={speedstat} size="large" variant="circular"></lightning-progress-bar>
+                        <p>Attack: {attackstat}</p>
+                        <lightning-progress-bar value={attackstat} size="large" variant="circular"></lightning-progress-bar>
+                    </div>  
+                </div>  
             </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-    </template>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_brand" onclick={handleDialogClose}>Close</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
 </template>

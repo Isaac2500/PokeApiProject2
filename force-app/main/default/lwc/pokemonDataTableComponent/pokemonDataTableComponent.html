@@ -1,64 +1,59 @@
 <template>
-    <div>
-        <table class='slds-table'>
-            <thead>
-                <tr>                     
-                    <th>
-                        <a data-id="Id">
-                            <div>Id</div>
-                        </a>
-                    </th>
-                    <th>
-                        <a data-id="Name">
-                            <div>Name</div>
-                        </a>
-                    </th>
-                    <th>
-                        Details
-                    </th>                   
-                </tr>
-            </thead>
-            <tbody>
-                <template for:each={pokemonList} for:item="pokemon">
-                    <tr key={pokemon.id}>                
-                        
-                        <td>                                
-                            {pokemon.Id__c}
-                        </td>
-                        
-                        <td>                                
-                            {pokemon.Name}
-                        </td>
-                        
-                        <td>
+    <div class="slds-grid slds-wrap">
+        <template for:each={pokemonList} for:item="pokemon">
+            
+                <div class="slds-size_1-of-3 slds-p-around_xx-small {{pokemon.Type__c}}" key={pokemon.Id}>
+                    <div class="slds-card shadows-transition">
+                        <div class="slds-card__body">
 
-                            <lightning-button
-                                label="Show Details"
-                               onclick={handleShowModal}
-                               data-id={pokemon.id}
-                            ></lightning-button>
-
-                            <c-pokemon-modal-component
-                                    
-                            sprite = {pokemon.Sprite__c}
-                            name = {nombrepokemon}
-                                
-                            ></c-pokemon-modal-component>
-                        </td>                  
+                            <div>
+                                <h3 slot="title" class="slds-text-title_caps slds-text-align_center">
+                                    {pokemon.Name}
+                                </h3>
+                            </div>
+                            <div class="slds-align_absolute-center">
+                                <img src='{pokemon.Sprite__c}'/>
+                            </div>
+                            <div class="slds-align_absolute-center">
+                                <lightning-button
+                                    label="Show Details"
+                                    onclick={handleShowModal}
+                                    data-id={pokemon.Id__c}
+                                ></lightning-button>
+                            </div>
+                        </div>
                         
-                    </tr>                                                                     
-                </template>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            
+        </template>
+    </div>
+
+        
+        <template if:true={showModal}>
+            <c-pokemon-modal-component onclose={closeModal}
+                poke-id={pokeId}
+                name={name}
+                sprite={sprite}
+                weight={weight}
+                height={height}
+                hpstat={hp}
+                defensestat={defense}
+                speedstat={speed}
+                attackstat={attack}
+                type={type}
+            ></c-pokemon-modal-component>
+        </template>
         <div style="float: right;">
-            <button style="margin-right: 10px;" onclick={prevpage}>
-                <lightning-icon icon-name="utility:chevronleft" onclick={prevpage}></lightning-icon>
+            <button style="margin-right: 10px;" onclick={GetPrevPage}>
+                <lightning-icon icon-name="utility:chevronleft"></lightning-icon>
             </button>
-            <button>
-                <lightning-icon icon-name="utility:chevronright" onclick={nextpage}></lightning-icon>
+            Page {page} From {totalNumberOfPages}
+            <button onclick={GetNextPage}>
+                <lightning-icon icon-name="utility:chevronright"></lightning-icon>
             </button>
         </div>
-    </div>
+    <!-- </div> -->
 
     
 </template>

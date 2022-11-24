@@ -7,6 +7,6 @@
   ],
   "name": "PokeApiProject2",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sfdcLoginUrl": "https://advanceddevelopmentsalesfor-dev-ed.my.salesforce.com/",
   "sourceApiVersion": "55.0"
 }

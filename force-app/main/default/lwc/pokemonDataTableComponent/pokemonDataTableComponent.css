@@ -1,0 +1,38 @@
+.pokemonTable thead th, .pokemonTable tbody td{
+    text-align: center;
+    text-transform: capitalize;
+}
+.pokemonTable tbody td a{
+    max-width:85%;
+    max-height:80%;
+    height: 90px;
+    width: auto;
+}
+tr{
+    color:white;
+}
+
+.shadows-transition{
+    transition: .3s;
+}
+.shadows-transition:hover {
+    box-shadow: 0 0 20px rgba(33,33,33,.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    z-index: 3; 
+}
+.grass{
+    background-color: #a7df8b;
+}
+.fire{
+    background-color: #F08030;
+}
+.normal{
+    background-color: #A8A878;
+}
+.water{
+    background-color: #75AEDC;
+}

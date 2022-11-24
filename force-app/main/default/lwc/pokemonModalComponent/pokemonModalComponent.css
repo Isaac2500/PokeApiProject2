@@ -1,0 +1,41 @@
+/*:root {
+    --grass: #78C850;
+    --light-grass: #78c85040;
+    --fire: #F08030;
+    --water: #6890F0;
+}*/
+.modal-hidden {
+    display: none;
+}
+.modal-container{
+    background-color: #78C850;
+    padding: 0;
+}
+.slds-modal__title{
+    margin: 1rem;
+}
+.modal-container h1{
+    color: white;
+}
+.poke-img{
+    width:25%;
+    height:auto;
+    border-radius: 50%;
+    background-color: #a7df8b;
+    margin: 1rem;
+}
+.stats-container{
+    margin: 0 .5rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    padding: 2rem
+}
+.pokemon-name{
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #a7df8b;
+}

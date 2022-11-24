@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel>PokemonMessageChannel</masterLabel>
-    <isExposed>true</isExposed>
     <description>This is a sample Lightning Message Channel.</description>
+    <isExposed>true</isExposed>
     <lightningMessageFields>
-        <fieldName>inputValue</fieldName>
         <description>The search key being pass to the data table</description>
+        <fieldName>inputValue</fieldName>
     </lightningMessageFields>
+    <masterLabel>PokemonMessageChannel</masterLabel>
 </LightningMessageChannel>
